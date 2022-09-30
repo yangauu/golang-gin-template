@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh_en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="input-uploader" onchange="change(this)">
+    <script>
+        const change = (fileData) => {
+            const { files, value, form } = fileData
+            console.log(files, value, form);
+            let params = new FormData();
+            params.append('file', files[0]);
+
+            axios.post('http://localhost:8000/api/uploadfile', params, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then(function ({ data: res }) {
+                    console.log(res);
+                    if (res.code == 200) {
+                        location.href = res.data
+                    }
+                })
+                .catch(function (error) {
+                    alert('上传文件失败')
+                });
+        }
+
+    </script>
+</body>
+
+</html>
