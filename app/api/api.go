@@ -10,6 +10,7 @@ func Default(r *gin.Engine) {
 	{
 		api.GET("/query", ApiExamQuery)
 		api.GET("/wechatpayresult", ApiWechatPayResult)
+		api.GET("/delqiniufile", ApiDelQiNiuFile)
 
 		api.POST("/delete", ApiExamDel)
 		api.POST("/update", ApiExamEdit)

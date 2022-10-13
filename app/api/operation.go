@@ -11,6 +11,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 删除七牛云空间文件
+func ApiDelQiNiuFile(c *gin.Context) {
+	f := c.Query("filename")
+	err := qiniu.DeleteToQiNiu(f)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"status": http.StatusOK,
+			"msg":    "删除失败",
+			"data":   err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"msg":    "删除成功",
+		"data":   f,
+	})
+}
+
 // 支付宝支付
 func ApiAliPay(c *gin.Context) {
 	url, err := alipay.ErweimeAlipay()
