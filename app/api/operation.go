@@ -14,7 +14,7 @@ import (
 // 删除七牛云空间文件
 func ApiDelQiNiuFile(c *gin.Context) {
 	f := c.Query("filename")
-	err := qiniu.DeleteToQiNiu(f)
+	err := qiniu.DeleteToQiNiu("image/" + f)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"status": http.StatusOK,
