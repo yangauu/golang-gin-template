@@ -2,6 +2,7 @@ package app
 
 import (
 	"go-template/app/api"
+	"go-template/docs"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -41,6 +42,14 @@ func RunApp() {
 	})
 
 	api.Default(r)
+
+	docs.SwaggerInfo.Title = "模版文档API"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Description = "关于接口的简单描述、项目说明"
+	docs.SwaggerInfo.Host = "localhost:8000"
+	docs.SwaggerInfo.BasePath = ""
+	docs.SwaggerInfo.InfoInstanceName = ""
+
 	r.Run(":8000")
 }
 

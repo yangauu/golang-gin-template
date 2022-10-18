@@ -1,0 +1,168 @@
+definitions:
+  conf.ErrApiDelQiNiuFile:
+    properties:
+      code:
+        example: 400
+        type: integer
+      msg:
+        example: 删除失败
+        type: string
+    type: object
+  conf.ErrApiExamDel:
+    properties:
+      code:
+        example: 400
+        type: integer
+      msg:
+        example: 删除失败
+        type: string
+    type: object
+  conf.ErrApiExamQuery:
+    properties:
+      code:
+        example: 400
+        type: integer
+      msg:
+        example: 获取列表出错
+        type: string
+    type: object
+  conf.SuccApiDelQiNiuFile:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data:
+        example: xxx.png
+        type: string
+      msg:
+        example: 删除成功
+        type: string
+    type: object
+  conf.SuccApiExamDel:
+    properties:
+      code:
+        example: 200
+        type: integer
+      msg:
+        example: 删除成功
+        type: string
+    type: object
+  conf.SuccApiExamQuery:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data:
+        $ref: '#/definitions/conf.SuccApiExamQueryData'
+      msg:
+        example: 获取成功
+        type: string
+    type: object
+  conf.SuccApiExamQueryData:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/conf.UserCollection'
+        type: array
+      page:
+        example: 1
+        type: integer
+      timestamp:
+        example: 1661246492
+        type: integer
+      total:
+        example: 20
+        type: integer
+    type: object
+  conf.UserCollection:
+    properties:
+      address:
+        example: 地址示例
+        type: string
+      age:
+        example: 20
+        type: integer
+      id:
+        example: id
+        type: string
+      sex:
+        example: 男
+        type: string
+      username:
+        example: 用户名
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/delete:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 用户id
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/conf.SuccApiExamDel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/conf.ErrApiExamDel'
+      summary: 删除用户
+      tags:
+      - 用户
+  /api/delqiniufile:
+    get:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 文件名称
+        in: query
+        name: filename
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/conf.SuccApiDelQiNiuFile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/conf.ErrApiDelQiNiuFile'
+      summary: 删除七牛文件
+      tags:
+      - 文件
+  /api/query:
+    get:
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/conf.SuccApiExamQuery'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/conf.ErrApiExamQuery'
+      summary: 获取用户列表
+      tags:
+      - 用户
+swagger: "2.0"

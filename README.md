@@ -7,3 +7,5 @@
 3、可以安装`fresh`后使用命令`fresh`启动、更新文件会热更新、也可`go run main.go`
 
 5、打包项目`CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o uchat-linux main.go`
+
+6、生成接口文档、先编写好`swag`注解、然后删除`docs`文件夹、执行命令`swag init`即可
