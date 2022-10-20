@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 	"go-template/app/conf"
+	"go-template/app/utils"
 	"time"
 )
 
@@ -48,7 +49,7 @@ func ExamQuery(page int) (conf.Paging, error) {
 	result := []conf.User{}
 	var total int64
 
-	tx := db.Model(conf.User{}).Count(&total).Scopes(paginate(page)).Find(&result)
+	tx := db.Model(conf.User{}).Count(&total).Scopes(utils.Paginate(page)).Find(&result)
 	if tx.Error != nil {
 		fmt.Println("查询失败", tx.Error)
 		return conf.Paging{}, tx.Error
