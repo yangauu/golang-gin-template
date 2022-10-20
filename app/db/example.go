@@ -46,11 +46,9 @@ func ExamEdit(user conf.User) error {
 // 查询
 func ExamQuery(page int) (conf.Paging, error) {
 	result := []conf.User{}
-
 	var total int64
-	db.Model(conf.User{}).Count(&total)
 
-	tx := db.Scopes(paginate(page)).Find(&result)
+	tx := db.Model(conf.User{}).Count(&total).Scopes(paginate(page)).Find(&result)
 	if tx.Error != nil {
 		fmt.Println("查询失败", tx.Error)
 		return conf.Paging{}, tx.Error
