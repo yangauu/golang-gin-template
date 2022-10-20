@@ -23,7 +23,7 @@ type ErrApiDelQiNiuFile struct {
 
 type SuccApiExamQueryData struct {
 	Paging
-	List []UserCollection `json:"list"`
+	List []User `json:"list"`
 }
 
 type SuccApiExamQuery struct {

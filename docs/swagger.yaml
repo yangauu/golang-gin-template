@@ -65,19 +65,16 @@ definitions:
         type: integer
       list:
         items:
-          $ref: '#/definitions/conf.UserCollection'
+          $ref: '#/definitions/conf.User'
         type: array
       page:
         example: 1
-        type: integer
-      timestamp:
-        example: 1661246492
         type: integer
       total:
         example: 20
         type: integer
     type: object
-  conf.UserCollection:
+  conf.User:
     properties:
       address:
         example: 地址示例
@@ -85,12 +82,17 @@ definitions:
       age:
         example: 20
         type: integer
-      id:
-        example: id
+      createTime:
+        example: "2022-12-12 00:00:00"
         type: string
+      id:
+        type: integer
       sex:
         example: 男
         type: string
+      timestamp:
+        example: 1661233245
+        type: integer
       username:
         example: 用户名
         type: string
@@ -151,6 +153,12 @@ paths:
     get:
       consumes:
       - multipart/form-data
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        required: true
+        type: integer
       produces:
       - application/json
       responses:

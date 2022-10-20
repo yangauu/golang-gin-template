@@ -9,3 +9,5 @@
 5、打包项目`CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o uchat-linux main.go`
 
 6、生成接口文档、先编写好`swag`注解、然后删除`docs`文件夹、执行命令`swag init`即可
+
+7、默认接口预览：`http://localhost:8000/swagger/index.html`

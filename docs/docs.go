@@ -104,6 +104,15 @@ const docTemplate = `{
                     "用户"
                 ],
                 "summary": "获取用户列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -217,16 +226,12 @@ const docTemplate = `{
                 "list": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/conf.UserCollection"
+                        "$ref": "#/definitions/conf.User"
                     }
                 },
                 "page": {
                     "type": "integer",
                     "example": 1
-                },
-                "timestamp": {
-                    "type": "integer",
-                    "example": 1661246492
                 },
                 "total": {
                     "type": "integer",
@@ -234,7 +239,7 @@ const docTemplate = `{
                 }
             }
         },
-        "conf.UserCollection": {
+        "conf.User": {
             "type": "object",
             "properties": {
                 "address": {
@@ -245,13 +250,20 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 20
                 },
-                "id": {
+                "createTime": {
                     "type": "string",
-                    "example": "id"
+                    "example": "2022-12-12 00:00:00"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "sex": {
                     "type": "string",
                     "example": "男"
+                },
+                "timestamp": {
+                    "type": "integer",
+                    "example": 1661233245
                 },
                 "username": {
                     "type": "string",

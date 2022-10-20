@@ -7,6 +7,7 @@ import (
 	"go-template/app/pay/wechat"
 	"go-template/app/qiniu"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -105,30 +106,6 @@ func ApiUploadFile(c *gin.Context) {
 	})
 }
 
-// @Summary 获取用户列表
-// @Tags 用户
-// @Accept mpfd
-// @Produce json
-// @Success 200 {object} conf.SuccApiExamQuery
-// @Failure 400 {object} conf.ErrApiExamQuery
-// @Router /api/query [get]
-func ApiExamQuery(c *gin.Context) {
-	result, err := db.ExamQuery()
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": http.StatusBadRequest,
-			"msg":  "获取列表出错",
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
-		"msg":  "获取成功",
-		"data": result,
-	})
-}
-
 // 查询支付结果
 func ApiWechatPayResult(c *gin.Context) {
 	wechat.JspPayResult()
@@ -149,7 +126,7 @@ func ApiWechatPayResult(c *gin.Context) {
 // @Failure 400 {object} conf.ErrApiExamDel
 // @Router /api/delete [post]
 func ApiExamDel(c *gin.Context) {
-	json := conf.UserCollection{}
+	json := conf.User{}
 	c.Bind(&json)
 
 	err := db.ExamDel(json.Id)
@@ -169,7 +146,7 @@ func ApiExamDel(c *gin.Context) {
 
 // 添加
 func ApiExamInsert(c *gin.Context) {
-	json := conf.UserCollection{}
+	json := conf.User{}
 	c.Bind(&json)
 
 	err := db.ExamInsert(json)
@@ -187,9 +164,37 @@ func ApiExamInsert(c *gin.Context) {
 	})
 }
 
+// @Summary 获取用户列表
+// @Tags 用户
+// @Accept mpfd
+// @Produce json
+// @Param page query int true "页码"
+// @Success 200 {object} conf.SuccApiExamQuery
+// @Failure 400 {object} conf.ErrApiExamQuery
+// @Router /api/query [get]
+func ApiExamQuery(c *gin.Context) {
+	p := c.Query("page")
+	page, _ := strconv.Atoi(p)
+
+	result, err := db.ExamQuery(page)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusBadRequest,
+			"msg":  "获取列表出错",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"msg":  "获取成功",
+		"data": result,
+	})
+}
+
 // 更新
 func ApiExamEdit(c *gin.Context) {
-	json := conf.UserCollection{}
+	json := conf.User{}
 	c.Bind(&json)
 
 	err := db.ExamEdit(json)
